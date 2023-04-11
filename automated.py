@@ -4,6 +4,7 @@
 from math import comb
 import numpy as np;
 import math
+from scipy.optimize import linprog
 
 # defining the input format 
 # the input will be for N(n, k, m : r)
@@ -92,7 +93,8 @@ print("The rhsInEqualityCoefficient = ", rhsInEqualityCoefficient)
 print("The boundary  = ", boundary);
 
 
+# now we have to use the linprog function to calculate the optimized value of the linear program for this purpose 
+optimizedValue = linprog(c = objectiveFunction, A_ub=lhsInEqualityCoefficient, b_ub=rhsInEqualityCoefficient,  bounds=boundary, method='simplex')
 
-# optimizedValue = 
-
-# now we have to calculate the linear program based on the 
+print("The value of k*n = ", k*n);
+print("The final optimized value is as follows for this purpose\n\n", optimizedValue);
