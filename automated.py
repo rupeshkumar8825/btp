@@ -20,13 +20,8 @@ print("k = ", k);
 print("m = ", m);
 print("r = ", r);
 
-
-
-
-# defining the function to find the value using first set of constraints 
-def findUsingFirstSetOfConstraints(n, k, m, r):
-    # do note that for mthe value of m < r it does not make sense because we will not be able to fetch the data items by accessing each server atmost one time we will have to access atleast one of the server for more than one time hence m < r does not make sense and we will not be entering these values in the input format 
-
+# defining the function to find the matrix A 
+def findMatrixA(n, k, m, r):
     # now we have to calculate the matrix A 
     A = [];
     firstRow = [];
@@ -52,9 +47,13 @@ def findUsingFirstSetOfConstraints(n, k, m, r):
     A.append(firstRow)
     A.append(secondRow)
 
+    # say everything went fine 
+    return A;
 
-    # now we have to calculate c = (k-r, k-r-1, ...... 1)
 
+
+# defining the function to find the value of row vector C 
+def findRowVectorC(n, k, m, r):
     c = [];
 
     temp = k-r
@@ -63,27 +62,66 @@ def findUsingFirstSetOfConstraints(n, k, m, r):
         c.append(temp)
         temp = temp-1;
 
+    # say everything went fine 
+    return c;
 
-    # now we have to calculate value of b 
+
+
+
+# defining the function to find the value of column vector b 
+def findColumnVectorb(n, k, m, r):
     b = [];
     b.append(math.floor((k-1)/r)*comb(m, k-1))
     b.append(n)
 
-    print("The matrix is as follows \n\n");
-    print(A);
+    # say everything went fine 
+    return b;
 
-    print("The array c is \n", c);
-    print("The array b is \n", b);
 
-    # we have to find the transpose of A 
+
+
+# defining the function to find the Atranspose for solving the dual of the original problem 
+def findAtransposeMatrix(A):
     Atranspose = np.array(A).T.tolist();
     # now we also have to multiply all the elements with -1 because linprog only supports the <= 
     Atranspose = (np.array(Atranspose) * -1).tolist();
-    print("The transpose of A is as follows\n", Atranspose);
+
+    # say everything went fine 
+    return Atranspose;
+
+
+
+
+
+# defining the function to find the value using first set of constraints 
+def findUsingFirstSetOfConstraints(n, k, m, r):
+    # do note that for mthe value of m < r it does not make sense because we will not be able to fetch the data items by accessing each server atmost one time we will have to access atleast one of the server for more than one time hence m < r does not make sense and we will not be entering these values in the input format 
+
+    A = findMatrixA(n, k, m, r);
+
+    # now we have to calculate c = (k-r, k-r-1, ...... 1)
+    c = findRowVectorC(n, k, m, r);
+    
+
+
+    # now we have to calculate value of b 
+    b = findColumnVectorb(n, k, m, r);
+   
+    # we have to find the transpose of A to solve its dual problem 
+    Atranspose = findAtransposeMatrix(A);
 
     # similarly we have to multiply all the elements of c with -1 
     c = (np.array(c)*-1).tolist();
+
+
+    # print("The array c is \n", c);
+    print("The matrix is as follows \n\n");
+    print(A);
+    print("The array b is \n", b);
     print("The updated c\n", c)
+    print("The transpose of A is as follows\n", Atranspose);
+
+    
 
 
     # and now we can use the linprog function in order to solve the LP formed above using the first set of constraints for this purpose 
@@ -112,8 +150,25 @@ def findUsingFirstSetOfConstraints(n, k, m, r):
 
 
 
-optimizedValues =  findUsingFirstSetOfConstraints(n, k, m, r)
+# defining the function to find the optimal value using the second set of improved sets of constraints for this purpose 
+def findUsingSecondSetOfConstraints(n, k, m, r):
+    # first we have to find the A 
+    A = findMatrixA(n, k, m, r)
+    Adas = np.array(A).tolist()
 
+    # we have to insert the identity matrix for this purpose 
+    identityMatrixLen = k-r
+    identityMatrix = np.identity(identityMatrixLen)
+
+    print("The identity matrix is as follows \n", identityMatrix)
+
+    # say everything went fine 
+    return 1;
+
+
+
+optimizedValuesUsingFirstSetOfConstraints =  findUsingFirstSetOfConstraints(n, k, m, r)
+optimizedValuesUsingSecondSetOfConstraints = findUsingSecondSetOfConstraints(n, k, m, r)
 # print("The value of k*n = ", k*n);
-print("The  optimized value is as follows for this purpose\n\n", optimizedValues);
+print("The  optimized value is as follows for this purpose\n\n", optimizedValuesUsingFirstSetOfConstraints);
 print("\n\n")
