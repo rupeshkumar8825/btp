@@ -217,6 +217,18 @@ def findBdas(b, n, k, m, r):
                 return -1;
             # otherwise we have to append this value to the end of b 
             b.append(int(ncValue))
+    else:
+        # this means we have to calculate the values for this case as r< (k/2) 
+        # we have to use the formula from research paper for this purpose 
+        # using the for loop for this purpose 
+        for i in range(0, k-r):
+            c = r+i
+            t1 = math.floor((k-1)/r)
+            t2 = comb(m, c)
+            t3 = comb(k-1, c)
+
+            b.append((t1*t2)/t3)
+
 
     # say everything went fine 
     return b;
