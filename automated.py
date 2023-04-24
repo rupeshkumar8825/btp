@@ -148,19 +148,36 @@ def findUsingFirstSetOfConstraints(n, k, m, r):
     return optimizedValue
 
 
+# defining the function to append the identity matrix at the end of the A 
+def appendIdentityAtEnd(A, identityMatrix):
+    # using the for loop for this purpose 
+    for row in identityMatrix:
+        A.append(row)
+    
+    # say everything went fine 
+    return;
+
+
 
 
 # defining the function to find the optimal value using the second set of improved sets of constraints for this purpose 
 def findUsingSecondSetOfConstraints(n, k, m, r):
     # first we have to find the A 
     A = findMatrixA(n, k, m, r)
-    Adas = np.array(A).tolist()
+    # Adas = np.array(A).tolist()
 
     # we have to insert the identity matrix for this purpose 
     identityMatrixLen = k-r
-    identityMatrix = np.identity(identityMatrixLen)
-
+    identityMatrix = np.identity(identityMatrixLen, dtype=int).tolist();
+    
+    # now we have to append the identity matrix at the end of A 
+    # calling the function for this purpose 
+    appendIdentityAtEnd(A, identityMatrix);
+    Adas = A;
+    # Adas
     print("The identity matrix is as follows \n", identityMatrix)
+    print("The new A matrix is \n", Adas)
+    print("The new A matrix is \n", A)
 
     # say everything went fine 
     return 1;
