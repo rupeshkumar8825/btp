@@ -92,6 +92,29 @@ def findAtransposeMatrix(A):
 
 
 
+# defining the function to solve the LP using the linprog function in python
+def solveLP(b, Atranspose, c):
+    objectiveFunction = b;
+    lhsInEqualityCoefficient = Atranspose
+    rhsInEqualityCoefficient = c 
+    boundary = [(0, float('inf'))]*len(b)
+
+    print("The final LP is as follows \n\n");
+    print("The objectiveFunction = ", objectiveFunction)
+    print("The lhsInEqualityCoefficient = ", lhsInEqualityCoefficient)
+    print("The rhsInEqualityCoefficient = ", rhsInEqualityCoefficient)
+    print("The boundary  = ", boundary);
+
+    # and now we can use the linprog function in order to solve the LP formed above using the first set of constraints for this purpose 
+    # we will be filling these fields based on the dual LP that will be formed 
+    # now we have to use the linprog function to calculate the optimized value of the linear program for this purpose 
+    optimizedValue = linprog(c = objectiveFunction, A_ub=lhsInEqualityCoefficient, b_ub=rhsInEqualityCoefficient,  bounds=boundary, method='simplex')
+
+    # say everything went fine 
+    return  optimizedValue;
+
+
+
 
 
 # defining the function to find the value using first set of constraints 
@@ -123,26 +146,9 @@ def findUsingFirstSetOfConstraints(n, k, m, r):
     print("The transpose of A is as follows\n", Atranspose);
 
     
+    optimizedValue =  solveLP(b, Atranspose, c)
 
-
-    # and now we can use the linprog function in order to solve the LP formed above using the first set of constraints for this purpose 
-    # we will be filling these fields based on the dual LP that will be formed 
-    objectiveFunction = b;
-    lhsInEqualityCoefficient = Atranspose
-    rhsInEqualityCoefficient = c 
-    boundary = [(0, float('inf'))]*len(b)
-
-    print("The final LP is as follows \n\n");
-    print("The objectiveFunction = ", objectiveFunction)
-    print("The lhsInEqualityCoefficient = ", lhsInEqualityCoefficient)
-    print("The rhsInEqualityCoefficient = ", rhsInEqualityCoefficient)
-    print("The boundary  = ", boundary);
-
-
-    # now we have to use the linprog function to calculate the optimized value of the linear program for this purpose 
-    optimizedValue = linprog(c = objectiveFunction, A_ub=lhsInEqualityCoefficient, b_ub=rhsInEqualityCoefficient,  bounds=boundary, method='simplex')
-
-
+   
     # here we have to make the function and then we have to pass the parameters in the function 
     # print("The final optimized value is as follows ", k*n-optimizedValue.fun)
     # say everything went fine 
@@ -230,20 +236,22 @@ def findUsingSecondSetOfConstraints(n, k, m, r):
     # calling the function for this purpose 
     appendIdentityAtEnd(A, identityMatrix);
     Adas = A;
+    AdasTranspose = findAtransposeMatrix(Adas)
 
     b = findColumnVectorb(n, k, m, r);
-    
     # now we have to find bdas 
     bDas = findBdas(b, n, k, m, r)
-
+    
+    c = findRowVectorC(n, k, m, r)
+    c = (np.array(c)*-1).tolist();
     # Adas
-    print("The identity matrix is as follows \n", identityMatrix)
-    print("The new A matrix is \n", Adas)
-    print("The value of bDas is \n", bDas)
+    # print("The identity matrix is as follows \n", identityMatrix)
+    # print("The new A matrix is \n", Adas)
+    # print("The value of bDas is \n", bDas)
     # print("The new A matrix is \n", A)
-
+    optimizedValue = solveLP(bDas, AdasTranspose, c)
     # say everything went fine 
-    return 1;
+    return optimizedValue;
 
 
 
@@ -252,3 +260,4 @@ optimizedValuesUsingSecondSetOfConstraints = findUsingSecondSetOfConstraints(n, 
 # print("The value of k*n = ", k*n);
 print("The  optimized value is as follows for this purpose\n\n", optimizedValuesUsingFirstSetOfConstraints);
 print("\n\n")
+print("The optimized value of LP using second set of constraints\n\n", optimizedValuesUsingSecondSetOfConstraints);
