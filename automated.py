@@ -21,6 +21,9 @@ print("k = ", k);
 print("m = ", m);
 print("r = ", r);
 
+
+
+
 # defining the function to find the matrix A 
 def findMatrixA(n, k, m, r):
     # now we have to calculate the matrix A 
@@ -53,6 +56,9 @@ def findMatrixA(n, k, m, r):
 
 
 
+
+
+
 # defining the function to find the value of row vector C 
 def findRowVectorC(n, k, m, r):
     c = [];
@@ -69,6 +75,8 @@ def findRowVectorC(n, k, m, r):
 
 
 
+
+
 # defining the function to find the value of column vector b 
 def findColumnVectorb(n, k, m, r):
     b = [];
@@ -81,6 +89,8 @@ def findColumnVectorb(n, k, m, r):
 
 
 
+
+
 # defining the function to find the Atranspose for solving the dual of the original problem 
 def findAtransposeMatrix(A):
     Atranspose = np.array(A).T.tolist();
@@ -89,6 +99,8 @@ def findAtransposeMatrix(A):
 
     # say everything went fine 
     return Atranspose;
+
+
 
 
 
@@ -112,6 +124,7 @@ def solveLP(b, Atranspose, c):
 
     # say everything went fine 
     return  optimizedValue;
+
 
 
 
@@ -155,6 +168,9 @@ def findUsingFirstSetOfConstraints(n, k, m, r):
     return optimizedValue
 
 
+
+
+
 # defining the function to append the identity matrix at the end of the A 
 def appendIdentityAtEnd(A, identityMatrix):
     # using the for loop for this purpose 
@@ -163,6 +179,9 @@ def appendIdentityAtEnd(A, identityMatrix):
     
     # say everything went fine 
     return;
+
+
+
 
 
 
@@ -185,6 +204,7 @@ def SearchValueInFile(p1, p2, p3):
     # it came out of for loop this means there is no such value in the table hence we have to abort solving 
     # say everything went fine 
     return -1;
+
 
 
 
@@ -232,6 +252,9 @@ def findBdas(b, n, k, m, r):
 
     # say everything went fine 
     return b;
+
+
+
 
 
 # defining the function to find the optimal value using the second set of improved sets of constraints for this purpose 
