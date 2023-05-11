@@ -9,10 +9,10 @@ from scipy.optimize import linprog
 
 # defining the input format 
 # the input will be for N(n, k, m : r)
-n = int (input("Enter the value of n total number of data points"));
+n = int (input("Enter the value of n total number of data points "));
 k = int(input("Enter the value of k total number of multiset requests "));
 m = int(input("Enter the value of m total number of servers "));
-r = int(input("Enter the value of r max multiplicity of each element"));
+r = int(input("Enter the value of r max multiplicity of each element "));
 
 
 print("the input that i got is as follows \n\n");
@@ -111,7 +111,7 @@ def solveLP(b, Atranspose, c):
     rhsInEqualityCoefficient = c 
     boundary = [(0, float('inf'))]*len(b)
 
-    print("The final LP is as follows \n\n");
+    print("The final LP is as follows \n");
     print("The objectiveFunction = ", objectiveFunction)
     print("The lhsInEqualityCoefficient = ", lhsInEqualityCoefficient)
     print("The rhsInEqualityCoefficient = ", rhsInEqualityCoefficient)
@@ -152,11 +152,12 @@ def findUsingFirstSetOfConstraints(n, k, m, r):
 
 
     # print("The array c is \n", c);
-    print("The matrix is as follows \n\n");
+    print("The matrix A is as follows \n\n");
     print(A);
     print("The array b is \n", b);
     print("The updated c\n", c)
     print("The transpose of A is as follows\n", Atranspose);
+    print("\n\n")
 
     
     optimizedValue =  solveLP(b, Atranspose, c)
@@ -293,6 +294,10 @@ def findUsingSecondSetOfConstraints(n, k, m, r):
 optimizedValuesUsingFirstSetOfConstraints =  findUsingFirstSetOfConstraints(n, k, m, r)
 optimizedValuesUsingSecondSetOfConstraints = findUsingSecondSetOfConstraints(n, k, m, r)
 # print("The value of k*n = ", k*n);
-print("The  optimized value is as follows for this purpose\n\n", optimizedValuesUsingFirstSetOfConstraints);
+print("The  optimized value is as follows for this purpose\n\n", k*n - optimizedValuesUsingFirstSetOfConstraints.fun);
 print("\n\n")
-print("The optimized value of LP using second set of constraints\n\n", optimizedValuesUsingSecondSetOfConstraints);
+print("The optimized value of LP using second set of constraints\n\n", k*n - optimizedValuesUsingSecondSetOfConstraints.fun);
+
+
+# this is the end of the code for this purpose 
+# and hence this is also the end of the BTP project for this purpose
