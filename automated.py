@@ -6,6 +6,7 @@ import numpy as np;
 import math
 import csv
 from scipy.optimize import linprog
+import os 
 
 # defining the input format 
 # the input will be for N(n, k, m : r)
@@ -192,15 +193,14 @@ def SearchValueInFile(p1, p2, p3):
     # print("inside the function searchvalueinfile\n")
     # using the for loop to read and print each line for this purpose
     for row in reader:
-        print(row)
+        # print(row)
         # we have to split this for this purpose 
         currentValues = row[0].split(" ")
-        print("The currentvalues is ", int(currentValues[0]))
         # now we have to check whether the currentValues is matching the p1, p2, p3 or not 
         if (p1 == int(currentValues[0]) and p2 == int(currentValues[1]) and p3 == int(currentValues[2])):
             # this means we have found the values for this purpose 
             return currentValues[3];
-        print(currentValues)
+        # print(currentValues)
 
     # it came out of for loop this means there is no such value in the table hence we have to abort solving 
     # say everything went fine 
@@ -213,11 +213,9 @@ def SearchValueInFile(p1, p2, p3):
 
 # defining the function to find the value of bdas 
 def findBdas(b, n, k, m, r):
-    print("inside the function findBdas\n")
 
     # applying if else statement for this purpose 
     if (r >= int((k/2))):
-        print("inside the if condition of function  findBdas\n")
 
         # then we have to use the binary weighted code for this purpose to find the values of nr, nr+1..
         # nc(k, m : r) = A(m, 2*(k-c), c)
@@ -235,6 +233,7 @@ def findBdas(b, n, k, m, r):
                 # then we have to abort solving LP 
                 print("The value for p1 = ", p1, ", p2 = ", p2, ", p3 = ", p3, " is not found in the table\n\n")
                 print("Aborting the process\n")
+                exit()
                 return -1;
             # otherwise we have to append this value to the end of b 
             b.append(int(ncValue))
@@ -262,7 +261,6 @@ def findBdas(b, n, k, m, r):
 def findUsingSecondSetOfConstraints(n, k, m, r):
     # first we have to find the A 
     A = findMatrixA(n, k, m, r)
-    # Adas = np.array(A).tolist()
 
     # we have to insert the identity matrix for this purpose 
     identityMatrixLen = k-r
@@ -280,11 +278,7 @@ def findUsingSecondSetOfConstraints(n, k, m, r):
     
     c = findRowVectorC(n, k, m, r)
     c = (np.array(c)*-1).tolist();
-    # Adas
-    # print("The identity matrix is as follows \n", identityMatrix)
-    # print("The new A matrix is \n", Adas)
-    # print("The value of bDas is \n", bDas)
-    # print("The new A matrix is \n", A)
+   
     optimizedValue = solveLP(bDas, AdasTranspose, c)
     # say everything went fine 
     return optimizedValue;
@@ -293,11 +287,16 @@ def findUsingSecondSetOfConstraints(n, k, m, r):
 
 optimizedValuesUsingFirstSetOfConstraints =  findUsingFirstSetOfConstraints(n, k, m, r)
 optimizedValuesUsingSecondSetOfConstraints = findUsingSecondSetOfConstraints(n, k, m, r)
-# print("The value of k*n = ", k*n);
+
+
 print("The  optimized value is as follows for this purpose\n\n", k*n - optimizedValuesUsingFirstSetOfConstraints.fun);
 print("\n\n")
 print("The optimized value of LP using second set of constraints\n\n", k*n - optimizedValuesUsingSecondSetOfConstraints.fun);
 
 
-# this is the end of the code for this purpose 
-# and hence this is also the end of the BTP project for this purpose
+
+
+
+
+# A(n, d, w) can also refer to the maximum number of codewords  of length n and minimum Hamming distance at least d, where every codeword has weight exactly w(weight means number of 1's).
+# A()
